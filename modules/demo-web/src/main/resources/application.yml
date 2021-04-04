@@ -1,0 +1,42 @@
+spring.application.name: web
+server.port: 8080
+spring.main.banner-mode: off
+
+## ログレベル
+logging.level:
+  com.example: DEBUG
+
+## thymeleaf
+spring.thymeleaf:
+  mode: HTML
+
+##
+spring.messages:
+  basename: i18n.messages
+#  cache-duration: -1
+
+## DataSource(Postgres)
+spring.datasource:
+  platform: postgresql
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/demo
+  username: postgres
+  password: postgres
+
+## Flyway
+spring.flyway:
+  enabled: true
+  baseline-on-migrate: true
+
+## Spring Security (OAuth2クライアント)
+#spring.security.oauth2.client:
+#  registration:
+#    keycloak:
+#      provider: keycloak
+#      client-id: demoapp
+#      client-secret: 08c33835-c18c-4dd7-a7df-aee3479d17c4
+#      scope: openid
+#  provider:
+#    keycloak:
+#      issuer-uri: http://localhost:18080/auth/realms/demo
+

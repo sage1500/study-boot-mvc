@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="#{todo.list.title}">List TODO</title>
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- <form th:action="@{/home}">
+        <button th:text="#{common.home}">Home</button>
+    </form>
+    <hr> -->
+    <h2 th:text="#{todo.list.title}">List Mod1</h2>
+
+    <a th:href="@{/mod1/create?form}">新規作成</a>
+
+    <hr>
+    <table class="todo-list">
+        <tr>
+            <th th:text="'★prop1'">prop1</th>
+            <th th:text="'★prop2'">prop2</th>
+            <th th:text="'★prop3'">prop3</th>
+            <th></th>
+        </tr>
+        <tr th:each="mod1 : ${list}">
+            <td th:text="'★prop1'">prop1</td>
+            <td th:text="'★prop2'">prop2</td>
+            <td th:text="'★prop3'">prop3</td>
+            <td>
+                <form th:action="@{/mod1/{id}(id=${mod1.id})}">
+                    <button th:text="'★詳細'">詳細</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <hr>
+
+</body>
+
+</html>

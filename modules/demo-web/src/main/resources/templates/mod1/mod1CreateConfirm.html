@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="#{todo.create.confirm.title}">Confirm - Add New TODO</title>
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+</head>
+
+<body>
+    <h2 th:text="#{todo.create.confirm.title}">Confirm - Add New TODO</h2>
+    <form th:action="@{/mod1/create}" method="post" th:object="${mod1Form}">
+        <div class="confirm">
+            <span th:text="#{message.todo.create.confirm}"></span>
+    
+            <table>
+                <tr>
+                    <td th:text="'★prop1'">prop1</td>
+                    <td th:text="*{prop1}"></td>
+                </tr>
+                <tr>
+                    <td th:text="'★prop2'">prop2</td>
+                    <td th:text="*{prop2}"></td>
+                </tr>
+                <tr>
+                    <td th:text="'★prop2'">prop2</td>
+                    <td th:text="*{prop2}"></td>
+                </tr>
+            </table>
+        </div>
+    
+        <input type="submit" name="redo" value="戻る">
+        <input type="submit" value="作成">
+    </form>
+</body>
+</html>

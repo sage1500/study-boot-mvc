@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="#{todo.create.input.title}">Mod1 Create Form</title>
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+</head>
+
+<body>
+    <h2 th:text="#{todo.create.input.title}">Mod1 Create Form</h2>
+
+    <form th:action="@{/mod1/create}" method="post" th:object="${mod1Form}" class="form-horizontal">
+        <label th:for="prop1" name="prop1" th:errorclass="error-label" th:text="'★prop1'">prop1</label>
+        <input type="text" th:field="*{prop1}" th:errorclass="error-input">
+        <span th:errors="*{prop1}" class="error-messages"></span>
+        <br>
+        <label th:for="prop2" name="prop2" th:errorclass="error-label" th:text="'★prop2'">prop2</label>
+        <input type="text" th:field="*{prop2}" th:errorclass="error-input">
+        <span th:errors="*{prop2}" class="error-messages"></span>
+        <br>
+        <label th:for="prop3" name="prop3" th:errorclass="error-label" th:text="'★prop3'">prop3</label>
+        <input type="text" th:field="*{prop3}" th:errorclass="error-input">
+        <span th:errors="*{prop3}" class="error-messages"></span>
+        <br>
+
+        <input type="submit" name="confirm" value="確認">
+        <input type="button" name="cancel" value="キャンセル">
+    </form>
+</body>
+
+</html>

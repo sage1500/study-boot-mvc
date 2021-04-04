@@ -1,0 +1,21 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="#{home.title}">Home</title>
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- <form th:action="@{/logout}" method="post">
+        <button th:text="#{common.logout}">Logout</button>
+    </form>
+    <hr> -->
+
+    <ul>
+        <li><a th:href="@{/mod1/list}" th:text="mod1へ">go to mod1</a></li>
+    </ul>
+
+</body>
+
+</html>

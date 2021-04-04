@@ -1,0 +1,22 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="#{todo.create.complete.title}">Complete - Add New TODO</title>
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+</head>
+
+<body>
+    <h2 th:text="#{todo.create.complete.title}">Complete - Add New TODO</h2>
+
+    <div class="complete">
+        <span th:text="${message}"></span>
+    </div>
+
+    <form th:action="@{/mod1/list}">
+        <button th:text="#{todo.common.return-to-list}">Return to list</button>
+    </form>
+</body>
+
+</html>

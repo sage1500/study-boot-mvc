@@ -13,7 +13,7 @@ spring.thymeleaf:
 ##
 spring.messages:
   basename: i18n.messages
-#  cache-duration: -1
+  cache-duration: -1
 
 ## DataSource(Postgres)
 spring.datasource:
@@ -27,6 +27,11 @@ spring.datasource:
 spring.flyway:
   enabled: true
   baseline-on-migrate: true
+
+## MyBatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
 
 ## Spring Security (OAuth2クライアント)
 #spring.security.oauth2.client:

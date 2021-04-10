@@ -1,5 +1,5 @@
-CREATE TABLE demo (
-    demo_id varchar(36) PRIMARY KEY,
+CREATE TABLE mod1 (
+    id bigserial PRIMARY KEY,
     prop1 varchar(30),
     prop2 varchar(30),
     prop3 varchar(30),

@@ -3,32 +3,35 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title th:text="#{todo.update.confirm.title}">Confirm - Update TODO</title>
+    <title th:text="#{title.mod1.updateConfirm}">Confirm</title>
     <link th:href="@{/css/content.css}" rel="stylesheet">
 </head>
 
 <body>
-    <h2 th:text="#{todo.update.confirm.title}">Confirm - Update TODO</h2>
+    <h2 th:text="#{title.mod1.updateConfirm}">Confirm</h2>
 
     <div class="confirm">
-        <span th:text="#{message.todo.update.confirm}"></span>
+        <span th:text="#{i.w1.m1.0100}"></span>
 
-        <table th:object="${todoForm}">
+        <table th:object="${mod1Form}">
             <tr>
-                <td th:text="#{todo.common.title}">Title</td>
-                <td th:text="*{todoTitle}"></td>
+                <th th:text="#{label.w1.mod1.prop1}">prop1</th>
+                <td th:text="*{prop1}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{label.w1.mod1.prop2}">prop2</th>
+                <td th:text="*{prop2}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{label.w1.mod1.prop3}">prop3</th>
+                <td th:text="*{prop3}"></td>
             </tr>
         </table>
     </div>
 
-    <form th:action="@{/todo/update/cancel}">
-        <button th:text="#{common.cancel}">Cancel</button>
-    </form>
-    <form th:action="@{/todo/update/input}" th:method="post">
-        <button th:text="#{todo.common.re-input}">Re input</button>
-    </form>
-    <form th:action="@{/todo/update/execute}" th:method="post">
-        <button th:text="#{todo.update.confirm.execute}">Execute</button>
+    <form th:action="@{/mod1/{id}/update(id=*{id})}" method="post" th:object="${mod1Form}" >
+        <button name="redo" th:text="#{label.w1.mod1.back}">Back</button>
+        <button th:text="#{label.w1.mod1.update}">Execute</button>
     </form>
 </body>
 

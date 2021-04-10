@@ -3,20 +3,18 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title th:title="#{todo.delete.complete.title}">Complete - Delete TODO</title>
+    <title th:title="#{title.mod1.deleteComplete}">Complete</title>
     <link th:href="@{/css/content.css}" rel="stylesheet">
 </head>
 
 <body>
-    <h2 th:title="#{todo.delete.complete.title}">Complete - Delete TODO</h2>
+    <h2 th:text="#{title.mod1.deleteComplete}">Complete</h2>
 
     <div class="complete">
         <span th:text="${message}"></span>
     </div>
 
-    <form th:action="@{/todo/}">
-        <button th:text="#{todo.common.return-to-list}">Return to list</button>
-    </form>
+    <a th:href="@{/mod1/list}" th:text="#{label.w1.mod1.returnToList}">Return</a>
 </body>
 
 </html>

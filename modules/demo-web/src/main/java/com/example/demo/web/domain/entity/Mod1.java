@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Mod1 {
-    private String id;
+    private long id;
     private String prop1;
     private String prop2;
     private String prop3;

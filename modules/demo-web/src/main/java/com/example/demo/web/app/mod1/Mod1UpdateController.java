@@ -4,31 +4,33 @@ import java.util.Locale;
 
 import javax.validation.groups.Default;
 
+import com.example.demo.web.domain.entity.Mod1;
+import com.example.demo.web.domain.service.Mod1Service;
 import com.github.dozermapper.core.Mapper;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-//@RequestMapping("mod1/update")
+@RequestMapping("mod1")
 @SessionAttributes("mod1Form")
 @RequiredArgsConstructor
 @Slf4j
 public class Mod1UpdateController {
+    private final Mod1Service mod1Service;
     private final MessageSource messageSource;
     private final Mapper dozerMapper;
 
@@ -37,71 +39,64 @@ public class Mod1UpdateController {
         return new Mod1Form();
     }
 
-//    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
-    public String index(Mod1Form todoForm) {
-        log.debug("[TODO-UPDATE]index: {}", todoForm);
+    @GetMapping(path = "{id}/update", params = "form")
+    public String form(@PathVariable("id") long id, Mod1Form mod1Form) {
+        log.debug("[MOD1-UPDATE]form: {}", mod1Form);
 
-        // API呼出し
-        var todo = "todo"; // todosApi.showTodoById(todoForm.getTodoId())
-        dozerMapper.map(todo, todoForm);
-        return "todo/todoUpdateInput";
+        var mod1 = mod1Service.findOne(id);
+        dozerMapper.map(mod1, mod1Form);
+
+        return "mod1/mod1UpdateForm";
     }
 
-//    @PostMapping("input")
-    public String input(Mod1Form todoForm) {
-        log.debug("[TODO-UPDATE]input: {}", todoForm);
-        return "todo/todoUpdateInput";
+    @PostMapping(path = "{id}/update", params = "redo")
+    public String redo(Mod1Form mod1Form) {
+        log.debug("[MOD1-UPDATE]redo: {}", mod1Form);
+        return "mod1/mod1UpdateForm";
     }
 
-//    @PostMapping("confirm")
-    public String confirm(@Validated({ Default.class, Mod1Form.Update.class }) Mod1Form todoForm,
+    @PostMapping(path = "{id}/update", params = "confirm")
+    public String confirm(@Validated({ Default.class, Mod1Form.Update.class }) Mod1Form mod1Form,
             BindingResult bindingResult) {
-        log.debug("[TODO-UPDATE]confirm: {}", todoForm);
+        log.debug("[MOD1-UPDATE]confirm: {}", mod1Form);
 
         if (bindingResult.hasErrors()) {
-            return input(todoForm);
+            return redo(mod1Form);
         }
 
-        return "todo/todoUpdateConfirm";
+        return "mod1/mod1UpdateConfirm";
     }
 
-//    @PostMapping("execute")
-    public String execute(Mod1Form todoForm) {
-        log.debug("[TODO-UPDATE]execute: {}", todoForm);
+    @PostMapping(path = "{id}/update") 
+    public String execute(@Validated({ Default.class, Mod1Form.Update.class }) Mod1Form mod1Form,
+    BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        log.debug("[MOD1-UPDATE]execute: {}", mod1Form);
 
-        // TODO Form -> Entity
-        // TodoResource todo = dozerMapper.map(todoForm, TodoResource.class);
-
-        try {
-            // TODO Update
-            // TODO Entity -> Form 
-            // dozerMapper.map(result, todoForm);
-
-            // TODO PRGでやる
-            String msg = messageSource.getMessage("message.todo.update.success", null, Locale.ROOT);
-            return "";
-        } catch (/* TODO 更新が競合した場合 */ Exception e) {
-                log.debug("[TODO-UPDATE]update failed: {}", e.getMessage());
-            // TODO PRGでやる
-            String msg = messageSource.getMessage("message.todo.update.failed-conflict", null, Locale.ROOT);
-            return "";
+        if (bindingResult.hasErrors()) {
+            return redo(mod1Form);
         }
+
+        // 業務ロジック呼び出し
+        var mod1 = dozerMapper.map(mod1Form, Mod1.class);
+        mod1Service.save(mod1);
+
+        // 画面に反映
+        var msg = messageSource.getMessage("i.w1.m1.0101", null, Locale.ROOT);
+        redirectAttributes.addFlashAttribute("message", msg);
+        return "redirect:/mod1/{id}/update?complete";
     }
 
-    // TODO PRGでやる
-//    @GetMapping("complete")
-    public String complete(SessionStatus sessionStatus, @RequestParam("message") String message, Model model) {
-        log.debug("[TODO-UPDATE]complete: message={}", message);
+    @GetMapping(path = "{id}/update", params = "complete")
+    public String complete(SessionStatus sessionStatus) {
+        log.debug("[MOD1-UPDATE]complete");
         sessionStatus.setComplete();
-        model.addAttribute("message", message);
-        return "todo/todoUpdateComplete";
+        return "mod1/mod1UpdateComplete";
     }
 
-//    @GetMapping("cancel")
+    @GetMapping(path = "{id}/update", params = "cancel")
     public String cancel(SessionStatus sessionStatus) {
-        log.debug("[TODO-UPDATE]cancel");
+        log.debug("[MOD1-UPDATE]cancel");
         sessionStatus.setComplete();
-        return "redirect:/todo/";
+        return "redirect:/mod1/{id}";
     }
-
 }

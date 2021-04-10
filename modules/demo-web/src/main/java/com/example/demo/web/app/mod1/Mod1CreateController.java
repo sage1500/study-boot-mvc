@@ -1,7 +1,11 @@
 package com.example.demo.web.app.mod1;
 
+import java.util.Locale;
+
 import javax.validation.groups.Default;
 
+import com.example.demo.web.domain.entity.Mod1;
+import com.example.demo.web.domain.service.Mod1Service;
 import com.github.dozermapper.core.Mapper;
 
 import org.springframework.context.MessageSource;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,78 +29,69 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class Mod1CreateController {
+    private final Mod1Service mod1Service;
     private final MessageSource messageSource;
     private final Mapper dozerMapper;
 
     @ModelAttribute("mod1Form")
-    //@ModelAttribute
     public Mod1Form setUpMod1Form() {
         return new Mod1Form();
     }
 
-    // @RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
-    // public String index(SessionStatus sessionStatus) {
-    //     log.debug("[TODO-CREATE]index");
-
-    //     // URL直接入力されると、セッションが残ったままの可能性があるため、
-    //     // セッションから削除して、入力画面にリダイレクト
-    //     sessionStatus.setComplete();
-    //     return "redirect:input";
-    // }
-
     @GetMapping(params = "form")
-    public String createForm(Mod1Form mod1Form) {
-        log.debug("[MOD1-CREATE]createForm: {}", mod1Form);
+    public String form(Mod1Form mod1Form) {
+        log.debug("[MOD1-CREATE]form: {}", mod1Form);
         return "mod1/mod1CreateForm";
     }
 
     @PostMapping(params = "redo")
-    public String createRedo(Mod1Form mod1Form) {
-        log.debug("[MOD1-CREATE]createRedo: {}", mod1Form);
+    public String redo(Mod1Form mod1Form) {
+        log.debug("[MOD1-CREATE]redo: {}", mod1Form);
         return "mod1/mod1CreateForm";
     }
 
     @PostMapping(params = "confirm")
-    public String createConfirm(@Validated({ Default.class, Mod1Form.Create.class }) Mod1Form mod1Form,
+    public String confirm(@Validated({ Default.class, Mod1Form.Create.class }) Mod1Form mod1Form,
             BindingResult bindingResult) {
-        log.debug("[MOD1-CREATE]createConfirm: {}", mod1Form);
+        log.debug("[MOD1-CREATE]confirm: {}", mod1Form);
 
         if (bindingResult.hasErrors()) {
-            return createRedo(mod1Form);
+            return redo(mod1Form);
         }
 
         return "mod1/mod1CreateConfirm";
     }
 
     @PostMapping
-    public String create(@Validated({ Default.class, Mod1Form.Create.class }) Mod1Form mod1Form, BindingResult bindingResult) {
+    public String execute(@Validated({ Default.class, Mod1Form.Create.class }) Mod1Form mod1Form,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.debug("[MOD1-CREATE]create: {}", mod1Form);
 
         if (bindingResult.hasErrors()) {
-            return createRedo(mod1Form);
+            return redo(mod1Form);
         }
 
-        // TODo form -> entity
-        // Todo todo = dozerMapper.map(todoForm, Todo.class);
+        // 業務ロジック呼び出し
+        // TODO id や version が載っている場合の考慮
+        var mod1 = dozerMapper.map(mod1Form, Mod1.class);
+        mod1Service.save(mod1);
 
-        // TODO var result = todosApi.createTodo(todo)
-        // TODO dozerMapper.map(result, todoForm);
-        // TODO PRGパターンに
-        //String msg = messageSource.getMessage("message.todo.create.success", null, Locale.ROOT);
-
-        return "redirect:/mod1/create?complete"; 
+        // 画面に反映
+        var msg = messageSource.getMessage("i.w1.m1.0001", null, Locale.ROOT);
+        redirectAttributes.addFlashAttribute("message", msg);
+        return "redirect:/mod1/create?complete";
     }
 
     @GetMapping(params = "complete")
-    public String createComplete(SessionStatus sessionStatus) {
-        log.debug("[MOD1-CREATE]createComplete");
+    public String complete(SessionStatus sessionStatus) {
+        log.debug("[MOD1-CREATE]complete");
         sessionStatus.setComplete();
         return "mod1/mod1CreateComplete";
     }
 
-    @PostMapping(params = "cancel")
-    public String createCancel(SessionStatus sessionStatus) {
-        log.debug("[MOD1-CREATE]createCancel");
+    @GetMapping(params = "cancel")
+    public String cancel(SessionStatus sessionStatus) {
+        log.debug("[MOD1-CREATE]cancel");
         sessionStatus.setComplete();
         return "redirect:/mod1/list";
     }

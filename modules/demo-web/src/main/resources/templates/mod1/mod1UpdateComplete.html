@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}">
 
 <head>
     <meta charset="UTF-8" />
@@ -10,9 +10,7 @@
 <body>
     <h2 th:text="#{title.mod1.updateComplete}">Complete</h2>
 
-    <div class="complete">
-        <span th:text="${message}"></span>
-    </div>
+    <span th:replace="~{common/common-parts :: messagesPanel}"></span>
 
     <a th:href="@{/mod1/list}" th:text="#{label.w1.mod1.returnToList}">Return</a>
 </body>

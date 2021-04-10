@@ -38,8 +38,8 @@ public class Mod1ServiceImpl implements Mod1Service {
     }
 
     @Override
-    public void delete(long id) {
-        mod1Repository.deleteById(id);
+    public int delete(long id) {
+        return mod1Repository.deleteById(id);
     }
 
 }

@@ -8,5 +8,5 @@ public interface Mod1Service {
     Mod1 findOne(long id);
     List<Mod1> findAll();
     Mod1 save(Mod1 entity);
-    void delete(long id);
+    int delete(long id);
 }

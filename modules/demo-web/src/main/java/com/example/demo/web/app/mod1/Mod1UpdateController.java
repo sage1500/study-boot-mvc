@@ -1,14 +1,11 @@
 package com.example.demo.web.app.mod1;
 
-import java.util.Locale;
-
 import javax.validation.groups.Default;
 
 import com.example.demo.web.domain.entity.Mod1;
 import com.example.demo.web.domain.service.Mod1Service;
 import com.github.dozermapper.core.Mapper;
 
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.terasoluna.gfw.common.message.ResultMessages;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Mod1UpdateController {
     private final Mod1Service mod1Service;
-    private final MessageSource messageSource;
     private final Mapper dozerMapper;
 
     @ModelAttribute("mod1Form")
@@ -67,9 +64,9 @@ public class Mod1UpdateController {
         return "mod1/mod1UpdateConfirm";
     }
 
-    @PostMapping(path = "{id}/update") 
+    @PostMapping(path = "{id}/update")
     public String execute(@Validated({ Default.class, Mod1Form.Update.class }) Mod1Form mod1Form,
-    BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.debug("[MOD1-UPDATE]execute: {}", mod1Form);
 
         if (bindingResult.hasErrors()) {
@@ -81,8 +78,9 @@ public class Mod1UpdateController {
         mod1Service.save(mod1);
 
         // 画面に反映
-        var msg = messageSource.getMessage("i.w1.m1.0101", null, Locale.ROOT);
-        redirectAttributes.addFlashAttribute("message", msg);
+        var messages = ResultMessages.info().add("i.w1.m1.0101");
+        redirectAttributes.addFlashAttribute(messages);
+
         return "redirect:/mod1/{id}/update?complete";
     }
 

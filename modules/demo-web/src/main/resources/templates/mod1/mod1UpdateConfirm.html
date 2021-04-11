@@ -2,15 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}">
 
 <head>
-    <meta charset="UTF-8" />
     <title th:text="#{title.mod1.updateConfirm}">Confirm</title>
-    <link th:href="@{/css/content.css}" rel="stylesheet">
 </head>
 
 <body>
     <h2 th:text="#{title.mod1.updateConfirm}">Confirm</h2>
 
-    <div class="confirm">
+    <div class="alert alert-info">
         <span th:text="#{i.w1.m1.0100}"></span>
 
         <table th:object="${mod1Form}">

@@ -1,10 +1,14 @@
 package com.example.demo.web.domain.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.example.demo.web.domain.entity.Mod1;
 import com.example.demo.web.domain.repository.Mod1Repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +28,16 @@ public class Mod1ServiceImpl implements Mod1Service {
     @Override
     public List<Mod1> findAll() {
         return mod1Repository.findAll();
+    }
+
+    @Override
+    public Page<Mod1> findPage(Pageable pageable) {
+        List<Mod1> mod1s = Collections.emptyList();
+        long total = mod1Repository.count();
+        if (0 < total) {
+            mod1s = mod1Repository.findPage(pageable);
+        }
+        return new PageImpl<Mod1>(mod1s, pageable, total);        
     }
 
     @Override

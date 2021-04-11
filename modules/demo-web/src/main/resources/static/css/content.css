@@ -2,23 +2,6 @@ form {
     display: inline;
 }
 
-div.confirm {
-    border: solid 2px green;
-    background-color: lightgreen;
-    padding: 0.5em; margin: 0.5em;
-}
-
-div.complete {
-    border: solid 2px blue;
-    background-color: lightblue;
-    padding: 0.5em; margin: 0.5em;
-}
-
-table.list th {
-    color: #FF9800;
-    background: #fff5e5;            
-}
-
 /*
  * 以下、Macchinetta のガイドラインより
  * https://macchinetta.github.io/server-guideline-thymeleaf/current/ja/ArchitectureInDetail/WebApplicationDetail/MessageManagement.html

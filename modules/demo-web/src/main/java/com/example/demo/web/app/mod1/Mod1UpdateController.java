@@ -6,6 +6,7 @@ import com.example.demo.web.domain.entity.Mod1;
 import com.example.demo.web.domain.service.Mod1Service;
 import com.github.dozermapper.core.Mapper;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -73,14 +74,21 @@ public class Mod1UpdateController {
             return redo(mod1Form);
         }
 
-        // 業務ロジック呼び出し
-        var mod1 = dozerMapper.map(mod1Form, Mod1.class);
-        mod1Service.save(mod1);
+        try {
+            // 業務ロジック呼び出し
+            var mod1 = dozerMapper.map(mod1Form, Mod1.class);
+            mod1Service.save(mod1);
 
-        // 画面に反映
-        var messages = ResultMessages.info().add("i.w1.m1.0101");
-        redirectAttributes.addFlashAttribute(messages);
-
+            // 画面に反映
+            var messages = ResultMessages.info().add("i.w1.m1.0101");
+            redirectAttributes.addFlashAttribute(messages);
+        } catch (OptimisticLockingFailureException e) {
+            // 更新競合発生
+            
+            // 画面に反映
+            var messages = ResultMessages.warning().add("w.w1.m1.0102");
+            redirectAttributes.addFlashAttribute(messages);
+        }
         return "redirect:/mod1/{id}/update?complete";
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.demo.web.domain.entity.Mod1;
 import com.example.demo.web.domain.repository.Mod1Repository;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,7 @@ public class Mod1ServiceImpl implements Mod1Service {
         if (0 < total) {
             mod1s = mod1Repository.findPage(pageable);
         }
-        return new PageImpl<Mod1>(mod1s, pageable, total);        
+        return new PageImpl<Mod1>(mod1s, pageable, total);
     }
 
     @Override
@@ -46,7 +47,11 @@ public class Mod1ServiceImpl implements Mod1Service {
             mod1Repository.insert(entity);
             entity.setVersion(1);
         } else {
-            mod1Repository.update(entity);
+            int result = mod1Repository.update(entity);
+            if (result == 0) {
+                // 更新競合
+                throw new OptimisticLockingFailureException("conflicted.");
+            }
         }
         return entity;
     }

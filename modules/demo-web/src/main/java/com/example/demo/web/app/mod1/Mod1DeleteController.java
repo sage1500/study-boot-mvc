@@ -25,11 +25,18 @@ public class Mod1DeleteController {
         log.debug("[MOD1-DELETE]execute: {}", id);
 
         // 業務ロジック呼び出し
-        mod1Service.delete(id);
+        int result = mod1Service.delete(id);
 
-        // 画面に反映
-        var messages = ResultMessages.info().add("i.w1.m1.0201");
-        redirectAttributes.addFlashAttribute(messages);
+        if (result > 0) {
+            // 画面に反映
+            var messages = ResultMessages.info().add("i.w1.m1.0201");
+            redirectAttributes.addFlashAttribute(messages);
+        } else {
+            // 競合
+            // 画面に反映
+            var messages = ResultMessages.warning().add("w.w1.m1.0202");
+            redirectAttributes.addFlashAttribute(messages);
+        }
         return "redirect:/mod1/{id}/delete?complete";
     }
 

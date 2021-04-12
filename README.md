@@ -30,18 +30,20 @@ TERASOLUNA の方は JSP にため、Macchinetta の方が参考になる部分�
 - 4.x. ※上記から参照されている各章
 
 ## TODO
-1. TERASOLUNA フレームワークが提供しているクラスを使うか、自前で用意するか。  
-    ※特にコードリストなど
 1. 実装
-	1. エラー処理
+	1. コードリスト
 
 ## メモ
 
 - 3.4.1.3.3. リクエストとハンドラメソッドのマッピング
     - https://macchinetta.github.io/server-guideline-thymeleaf/current/ja/ImplementationAtEachLayer/ApplicationLayer.html#controller-mapping-policy-sampleapp-mapping-design-label    
+- 4.7. メッセージ管理
+    - https://macchinetta.github.io/server-guideline-thymeleaf/current/ja/ArchitectureInDetail/WebApplicationDetail/MessageManagement.html
 - 4.12. Thymeleafにおける画面レイアウト
     - https://macchinetta.github.io/server-guideline-thymeleaf/current/ja/ArchitectureInDetail/WebApplicationDetail/TemplateLayout.html
 
+
+## 起動方法
 - production での起動例
     ```
     > java -jar .\modules\demo-web\target\demo-web-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod

@@ -1,0 +1,22 @@
+server.port: 8081
+
+## ログレベル
+logging.level:
+  com.example: INFO
+
+# ##
+# spring.messages:
+#   basename: i18n.messages
+#   cache-duration: -1
+
+# ## DataSource(Postgres)
+# spring.datasource:
+#   url: jdbc:postgresql://localhost:5432/demo
+#   username: postgres
+#   password: postgres
+
+# ## Flyway
+# spring.flyway:
+#   enabled: true
+#   baseline-on-migrate: true
+

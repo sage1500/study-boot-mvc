@@ -42,3 +42,7 @@ TERASOLUNA の方は JSP にため、Macchinetta の方が参考になる部分�
 - 4.12. Thymeleafにおける画面レイアウト
     - https://macchinetta.github.io/server-guideline-thymeleaf/current/ja/ArchitectureInDetail/WebApplicationDetail/TemplateLayout.html
 
+- production での起動例
+    ```
+    > java -jar .\modules\demo-web\target\demo-web-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+    ```

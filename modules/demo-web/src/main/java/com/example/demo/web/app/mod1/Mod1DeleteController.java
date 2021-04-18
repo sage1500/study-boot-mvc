@@ -29,7 +29,7 @@ public class Mod1DeleteController {
 
         if (result > 0) {
             // 画面に反映
-            var messages = ResultMessages.info().add("i.w1.m1.0201");
+            var messages = ResultMessages.success().add("i.w1.m1.0201");
             redirectAttributes.addFlashAttribute(messages);
         } else {
             // 競合

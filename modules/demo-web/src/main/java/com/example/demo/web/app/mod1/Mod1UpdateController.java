@@ -80,11 +80,11 @@ public class Mod1UpdateController {
             mod1Service.save(mod1);
 
             // 画面に反映
-            var messages = ResultMessages.info().add("i.w1.m1.0101");
+            var messages = ResultMessages.success().add("i.w1.m1.0101");
             redirectAttributes.addFlashAttribute(messages);
         } catch (OptimisticLockingFailureException e) {
             // 更新競合発生
-            
+
             // 画面に反映
             var messages = ResultMessages.warning().add("w.w1.m1.0102");
             redirectAttributes.addFlashAttribute(messages);

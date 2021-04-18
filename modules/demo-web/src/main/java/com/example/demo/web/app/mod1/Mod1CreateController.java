@@ -74,7 +74,7 @@ public class Mod1CreateController {
         mod1Service.save(mod1);
 
         // 画面に反映
-        var messages = ResultMessages.info().add("i.w1.m1.0001");
+        var messages = ResultMessages.success().add("i.w1.m1.0001");
         redirectAttributes.addFlashAttribute(messages);
         return "redirect:/mod1/create?complete";
     }

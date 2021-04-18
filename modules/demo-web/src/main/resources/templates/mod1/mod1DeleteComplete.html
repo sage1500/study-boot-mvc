@@ -6,11 +6,11 @@
 </head>
 
 <body>
-    <h2 th:text="#{title.mod1.deleteComplete}">Complete</h2>
-
-    <span th:replace="~{common/common-parts :: messagesPanel}"></span>
-    
-    <a th:href="@{/mod1/list}" th:text="#{label.w1.mod1.returnToList}">Return</a>
+    <div class="container">
+        <h2 th:text="#{title.mod1.deleteComplete}">Complete</h2>
+        <span th:replace="~{common/common-parts :: messagesPanel}"></span>
+        <a th:href="@{/mod1/list}" th:text="#{label.w1.mod1.returnToList}" class="btn btn-success">Return</a>
+    </div>
 </body>
 
 </html>

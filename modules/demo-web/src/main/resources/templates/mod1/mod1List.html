@@ -6,34 +6,36 @@
 </head>
 
 <body>
-    <h2 th:text="#{title.mod1.list}">List</h2>
+    <div class="container">
+        <h2 th:text="#{title.mod1.list}">List</h2>
 
-    <a th:href="@{/mod1/create?form}" th:text="#{label.w1.mod1.createNew}">CreateNew</a>
+        <a th:href="@{/mod1/create?form}" class="btn btn-info" th:text="#{label.w1.mod1.createNew}">CreateNew</a>
 
-    <hr>
-    <table class="table table-light table-striped">
-        <thead>
-            <tr>
-                <th th:text="#{label.w1.mod1.prop1}">prop1</th>
-                <th th:text="#{label.w1.mod1.prop2}">prop2</th>
-                <th th:text="#{label.w1.mod1.prop3}">prop3</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="mod1, status : ${page.content}" th:object="${mod1}">
-                <td th:text="*{prop1}">prop1</td>
-                <td th:text="*{prop2}">prop2</td>
-                <td th:text="*{prop3}">prop3</td>
-                <td>
-                    <form th:action="@{/mod1/{id}(id=*{id})}">
-                        <button th:text="#{label.w1.mod1.detail}">Detail</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div th:replace="~{common/common-parts :: pagination (${page})}"></div>
+        <hr>
+        <table class="table table-light table-striped">
+            <thead>
+                <tr>
+                    <th th:text="#{label.w1.mod1.prop1}">prop1</th>
+                    <th th:text="#{label.w1.mod1.prop2}">prop2</th>
+                    <th th:text="#{label.w1.mod1.prop3}">prop3</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mod1, status : ${page.content}" th:object="${mod1}">
+                    <td th:text="*{prop1}">prop1</td>
+                    <td th:text="*{prop2}">prop2</td>
+                    <td th:text="*{prop3}">prop3</td>
+                    <td>
+                        <form th:action="@{/mod1/{id}(id=*{id})}">
+                            <button th:text="#{label.w1.mod1.detail}" class="btn btn-info">Detail</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:replace="~{common/common-parts :: pagination (${page})}"></div>
+    </div>
 </body>
 
 </html>

@@ -6,28 +6,41 @@
 </head>
 
 <body>
-    <h2 th:text="#{title.mod1.updateForm}">Form</h2>
+    <div class="container">
+        <h2 th:text="#{title.mod1.updateForm}">Form</h2>
 
-    <form th:action="@{/mod1/{id}/update(id=*{id})}" method="post" th:object="${mod1Form}" class="form-horizontal">
-        <label th:for="prop1" name="prop1" th:errorclass="error-label"
-            th:text="|#{label.w1.mod1.prop1}: |">prop1</label>
-        <input type="text" th:field="*{prop1}" th:errorclass="error-input">
-        <span th:errors="*{prop1}" class="error-messages"></span>
-        <br>
-        <label th:for="prop2" name="prop2" th:errorclass="error-label"
-            th:text="|#{label.w1.mod1.prop2}: |">prop2</label>
-        <input type="text" th:field="*{prop2}" th:errorclass="error-input">
-        <span th:errors="*{prop2}" class="error-messages"></span>
-        <br>
-        <label th:for="prop3" name="prop3" th:errorclass="error-label"
-            th:text="|#{label.w1.mod1.prop3}: |">prop3</label>
-        <input type="text" th:field="*{prop3}" th:errorclass="error-input">
-        <span th:errors="*{prop3}" class="error-messages"></span>
-        <br>
+        <form th:action="@{/mod1/{id}/update(id=*{id})}" method="post" th:object="${mod1Form}" class="row g-1">
+            <!-- prop1 -->
+            <label th:for="prop1" name="prop1" class="form-label col-md-2"
+                th:text="#{label.w1.mod1.prop1}">prop1</label>
+            <div class="col-md-10">
+                <input type="text" th:field="*{prop1}" class="form-control" th:errorclass="is-invalid">
+                <div th:errors="*{prop1}" class="invalid-feedback"></div>
+            </div>
 
-        <button name="confirm" th:text="#{label.w1.mod1.confirm}">Confirm</button>
-    </form>
-    <hr>
-    <a th:href="@{/mod1/{id}/update?cancel(id=*{id})}" th:object="${mod1Form}" th:text="#{label.w1.mod1.back}">Back</a>
+            <!-- prop2 -->
+            <label th:for="prop2" name="prop2" class="form-label col-md-2"
+                th:text="#{label.w1.mod1.prop2}">prop2</label>
+            <div class="col-md-10">
+                <input type="text" th:field="*{prop2}" class="form-control" th:errorclass="is-invalid">
+                <div th:errors="*{prop2}" class="invalid-feedback"></div>
+            </div>
+
+            <!-- prop3 -->
+            <label th:for="prop3" name="prop3" class="form-label col-md-2"
+                th:text="#{label.w1.mod1.prop3}">prop3</label>
+            <div class="col-md-10">
+                <input type="text" th:field="*{prop3}" class="form-control" th:errorclass="is-invalid">
+                <div th:errors="*{prop3}" class="invalid-feedback"></div>
+            </div>
+
+            <!-- button -->
+            <button name="confirm" th:text="#{label.w1.mod1.confirm}" class="btn btn-primary col-md-auto">Confirm</button>
+        </form>
+        <hr>
+        <a th:href="@{/mod1/{id}/update?cancel(id=*{id})}" th:object="${mod1Form}" th:text="#{label.w1.mod1.back}"
+            class="btn btn-secondary">Back</a>
+    </div>
+</body>
 
 </html>

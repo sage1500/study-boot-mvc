@@ -6,31 +6,29 @@
 </head>
 
 <body>
-    <h2 th:text="#{title.mod1.updateConfirm}">Confirm</h2>
+    <div class="container">
+        <h2 th:text="#{title.mod1.updateConfirm}">Confirm</h2>
 
-    <div class="alert alert-info">
-        <span th:text="#{i.w1.m1.0100}"></span>
+        <div class="alert alert-info">
+            <span th:text="#{i.w1.m1.0100}"></span>
 
-        <table th:object="${mod1Form}">
-            <tr>
-                <th th:text="#{label.w1.mod1.prop1}">prop1</th>
-                <td th:text="*{prop1}"></td>
-            </tr>
-            <tr>
-                <th th:text="#{label.w1.mod1.prop2}">prop2</th>
-                <td th:text="*{prop2}"></td>
-            </tr>
-            <tr>
-                <th th:text="#{label.w1.mod1.prop3}">prop3</th>
-                <td th:text="*{prop3}"></td>
-            </tr>
-        </table>
+            <div class="row g-1" th:object="${mod1Form}">
+                <div class="col-md-2"  th:text="#{label.w1.mod1.prop1}">prop1</div>
+                <div class="col-md-10" th:text="*{prop1}"></div>
+    
+                <div class="col-md-2"  th:text="#{label.w1.mod1.prop2}">prop2</div>
+                <div class="col-md-10" th:text="*{prop2}"></div>
+    
+                <div class="col-md-2"  th:text="#{label.w1.mod1.prop3}">prop3</div>
+                <div class="col-md-10" th:text="*{prop3}"></div>
+            </div>
+        </div>
+
+        <form th:action="@{/mod1/{id}/update(id=*{id})}" method="post" th:object="${mod1Form}">
+            <button name="redo" th:text="#{label.w1.mod1.back}" class="btn btn-secondary">Back</button>
+            <button th:text="#{label.w1.mod1.update}" class="btn btn-primary">Execute</button>
+        </form>
     </div>
-
-    <form th:action="@{/mod1/{id}/update(id=*{id})}" method="post" th:object="${mod1Form}" >
-        <button name="redo" th:text="#{label.w1.mod1.back}">Back</button>
-        <button th:text="#{label.w1.mod1.update}">Execute</button>
-    </form>
 </body>
 
 </html>

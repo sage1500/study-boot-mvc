@@ -34,14 +34,19 @@ mybatis:
     map-underscore-to-camel-case: true
 
 ## Spring Security (OAuth2クライアント)
-#spring.security.oauth2.client:
-#  registration:
-#    keycloak:
-#      provider: keycloak
-#      client-id: demoapp
-#      client-secret: 08c33835-c18c-4dd7-a7df-aee3479d17c4
-#      scope: openid
-#  provider:
-#    keycloak:
-#      issuer-uri: http://localhost:18080/auth/realms/demo
+spring.security.oauth2.client:
+  registration:
+    demoapp:
+      provider: keycloak
+      client-id: demoapp
+      client-secret: 08c33835-c18c-4dd7-a7df-aee3479d17c4
+      scope: openid
+  provider:
+    keycloak:
+      issuer-uri: http://localhost:18080/auth/realms/demo
 
+## 
+#server.servlet.context-path: /hoge
+#server.servlet.session.cookie.max-age: 1m
+server.servlet.session.cookie.name: SID
+#spring.session.timeout: 240

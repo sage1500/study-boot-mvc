@@ -7,7 +7,12 @@
 
 <body>
     <div th:fragment="header" th:remove="tag">
-        <h1 style="background: #e5eCf9;">Demo Application</h1>
+        <div style="background: #e5eCf9;">
+            Demo Application
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button class="btn btn-secondary">ログアウト</button>
+            </form>
+        </div>
     </div>
 </body>
 

@@ -15,6 +15,7 @@
         <table class="table table-light table-striped">
             <thead>
                 <tr>
+                    <th></th>
                     <th th:text="#{label.w1.mod1.prop1}">prop1</th>
                     <th th:text="#{label.w1.mod1.prop2}">prop2</th>
                     <th th:text="#{label.w1.mod1.prop3}">prop3</th>
@@ -23,6 +24,7 @@
             </thead>
             <tbody>
                 <tr th:each="mod1, status : ${page.content}" th:object="${mod1}">
+                    <td><input type="radio" name="check" th:value="*{id}"></td>
                     <td th:text="*{prop1}">prop1</td>
                     <td th:text="*{prop2}">prop2</td>
                     <td th:text="*{prop3}">prop3</td>
@@ -35,7 +37,84 @@
             </tbody>
         </table>
         <div th:replace="~{common/common-parts :: pagination (${page})}"></div>
+
+        <hr>
+        <div class="row">
+            <!-- 「詳細」ボタン -->
+            <div class="col-md"><button id="detailBtn" th:text="#{label.w1.mod1.detail}" class="btn btn-info"
+                    disabled>Detail</button></div>
+        </div>
+        <hr>
+        <div class="container">
+            <!-- エラー表示エリア -->
+            <div id="result_fail" class="row alert alert-warning collapse">
+            </div>
+            <!-- 結果表示エリア -->
+            <div id="result_success" class="row alert alert-info collapse">
+                <div class="col-md-2" th:text="#{label.w1.mod1.prop1}">prop1</div>
+                <div class="col-md-10" id="result_prop1"></div>
+                <div class="col-md-2" th:text="#{label.w1.mod1.prop2}">prop2</div>
+                <div class="col-md-10" id="result_prop2"></div>
+                <div class="col-md-2" th:text="#{label.w1.mod1.prop3}">prop3</div>
+                <div class="col-md-10" id="result_prop3"></div>
+            </div>
+        </div>
     </div>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $(function () {
+            // ラジオボタンが選択されたら「詳細」ボタンを活性化する
+            $('input[name="check"]:radio').change(function () {
+                if ($(this).val()) {
+                    $('#detailBtn').removeAttr('disabled');
+                }
+            });
+
+            // 「詳細」ボタン押下時の動作
+            $('#detailBtn').click(function () {
+                var selectedId = $('input[name=check]:checked').val();
+                if (!selectedId) {
+                    return;
+                }
+
+                var baseUrl = /*[[@{/mod1}]]*/ '/mod1';
+
+                // たまにエラーにするために仕込み
+                if ((new Date().getTime() % 100) < 50) {
+                    selectedId = "999999";
+                }
+
+                $.get({
+                    url: baseUrl + '/' + selectedId,
+                    dataType: 'json'
+                }).then(
+                    function (results) {
+                        // 表示エリアの切り替え
+                        $('#result_success').addClass('show');
+                        $('#result_fail').removeClass('show');
+
+                        // 結果反映
+                        $('#result_prop1').text(results.prop1);
+                        $('#result_prop2').text(results.prop2);
+                        $('#result_prop3').text(results.prop3);
+                    },
+                    function (jqXHR, textStatus, errorThrown) {
+                        console.warn("Ajax Fail:", jqXHR.status, textStatus, ",", errorThrown.message);
+
+                        // 表示エリアの切り替え
+                        $('#result_success').removeClass('show');
+                        $('#result_fail').addClass('show');
+
+                        // 結果反映
+                        var message = /*[[#{w.w1.m1.0900}]]*/ "error";
+                        $('#result_fail').text(message);
+                    }
+                );
+            });
+        });
+        /*]]>*/
+    </script>
 </body>
 
 </html>

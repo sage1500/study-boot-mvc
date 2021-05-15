@@ -48,3 +48,24 @@ TERASOLUNA の方は JSP にため、Macchinetta の方が参考になる部分�
     ```
     > java -jar .\modules\demo-web\target\demo-web-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
     ```
+
+## Thymeleaf に JavaScript を埋め込む
+
+`body`タグの最後に以下のように記載する。  
+※ なお、`$(function() {`、`});` の部分は jQuery を使った場合の例であり、この部分は必須ではない。  
+※ 参考：
+[12.3 JavaScriptインライン処理](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf_ja.html#javascript%E3%82%A4%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E5%87%A6%E7%90%86)
+ 
+
+```html
+<script th:inline="javascript">
+    $(function () {
+        // ...
+        var baseUrl = /*[[@{/mod1}]]*/ '/mod1';
+        // ...
+    });
+</script>
+```
+
+- `script` タグに `th:inline` をつける
+- `${...}` や `*{...}`, `#{...}`, `@{...}` を使いたいときは、`/*[[...]]*/` で括る。そうすると、`/*[[...]]*/` の後に書いたパラメータが置換される。

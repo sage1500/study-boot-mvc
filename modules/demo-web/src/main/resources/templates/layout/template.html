@@ -8,8 +8,16 @@
     <link rel="stylesheet" th:href="@{/css/content.css}" type="text/css" media="screen, projection">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css" media="screen, projection">
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
-    <script type="text/javascript">
+    <script th:inline="javascript">
+        $(function () {
+            $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+                console.debug("Ajax: options=", JSON.stringify(options));
 
+                if (!options.crossDomain) {
+                    return jqXHR.setRequestHeader(/*[[${_csrf.headerName}]]*/"", /*[[${_csrf.token}]]*/"");
+                }
+            });
+        });
     </script>
     <title th:replace="${title}">Title</title>
 </head>

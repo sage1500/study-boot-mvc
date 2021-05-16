@@ -41,7 +41,7 @@ public class Mod1DetailController {
 
     @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Mod1Form detailJson(@PathVariable("id") long id, Mod1Form mod1Form) {
+    public Mod1Form detailForApi(@PathVariable("id") long id, Mod1Form mod1Form) {
         log.debug("[MOD1-DETAIL]detailJson: {}", id);
 
         // 業務ロジック呼び出し

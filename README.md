@@ -69,3 +69,25 @@ TERASOLUNA の方は JSP にため、Macchinetta の方が参考になる部分�
 
 - `script` タグに `th:inline` をつける
 - `${...}` や `*{...}`, `#{...}`, `@{...}` を使いたいときは、`/*[[...]]*/` で括る。そうすると、`/*[[...]]*/` の後に書いたパラメータが置換される。
+
+## jQuery Ajax(CSRF対策) + Thymeleaf
+
+`jqXHR.setRequestHeader()` で、CSRFトークンを埋め込む。
+
+以下は、HTMLに JavaScript を埋め込める場合の例。
+
+```html
+<script th:inline="javascript">
+    $(function () {
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+            if (!options.crossDomain) {
+                return jqXHR.setRequestHeader(/*[[${_csrf.headerName}]]*/"", /*[[${_csrf.token}]]*/"");
+            }
+        });
+    });
+</script>
+```
+
+JavaScript を jsファイルに記載し、HTMLに JavaScript を埋め込めない場合は、
+CSRFトークンを metaタグから取得する方法と、
+Cookieから取得する方法もある。

@@ -7,6 +7,7 @@ import com.example.demo.web.domain.service.Mod1Service;
 import com.github.dozermapper.core.Mapper;
 
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -90,6 +92,23 @@ public class Mod1UpdateController {
             redirectAttributes.addFlashAttribute(messages);
         }
         return "redirect:/mod1/{id}/update?complete";
+    }
+
+    @PostMapping(path = "{id}/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public boolean executeForApi(@Validated({ Default.class, Mod1Form.Update.class }) Mod1Form mod1Form,
+            BindingResult bindingResult) {
+        log.debug("[MOD1-UPDATE]executeForApi: {}", mod1Form);
+
+        if (bindingResult.hasErrors()) {
+            log.warn("Binding Error: {}", bindingResult);
+            throw new RuntimeException("Binding Error");
+        }
+
+        // 業務ロジック呼び出し
+        var mod1 = dozerMapper.map(mod1Form, Mod1.class);
+        mod1Service.save(mod1);
+        return true;
     }
 
     @GetMapping(path = "{id}/update", params = "complete")
